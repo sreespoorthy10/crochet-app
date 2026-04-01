@@ -21,14 +21,21 @@ def read_root():
 @app.post("/convert")
 async def convert_image(
     file: UploadFile = File(...),
-    grid_size: int = Form(...)
+    grid_size: int = Form(...),
+    color_count: int = Form(...)
 ):
     contents = await file.read()
 
     image = Image.open(io.BytesIO(contents)).convert("RGB")
 
+    # resize to grid first
     image = image.resize((grid_size, grid_size), Image.Resampling.NEAREST)
 
+    # stronger color reduction
+    image = image.convert("P", palette=Image.Palette.ADAPTIVE, colors=color_count)
+    image = image.convert("RGB")
+
+    # enlarge for preview
     preview_size = 400
     image = image.resize((preview_size, preview_size), Image.Resampling.NEAREST)
 

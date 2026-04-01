@@ -7,6 +7,7 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [gridSize, setGridSize] = useState("40");
+  const [colorCount, setColorCount] = useState("8");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -29,6 +30,7 @@ export default function Home() {
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("grid_size", gridSize);
+    formData.append("color_count", colorCount);
 
     try {
       const response = await fetch("http://127.0.0.1:8001/convert", {
@@ -67,6 +69,19 @@ export default function Home() {
           <option value="20">20 x 20</option>
           <option value="40">40 x 40</option>
           <option value="60">60 x 60</option>
+        </select>
+      </div>
+
+      <div className="mt-4">
+        <label className="mr-2">Colors:</label>
+        <select
+          value={colorCount}
+          onChange={(e) => setColorCount(e.target.value)}
+          className="border px-2 py-1"
+        >
+          <option value="4">4 colors</option>
+          <option value="8">8 colors</option>
+          <option value="12">12 colors</option>
         </select>
       </div>
 
