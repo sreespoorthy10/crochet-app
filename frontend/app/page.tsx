@@ -97,6 +97,14 @@ export default function Home() {
       {resultImage && (
         <div className="mt-6">
           <img src={resultImage} alt="Grid result" className="border" />
+            
+          <a
+            href={resultImage}
+            download="crochet-grid.png"
+            className="mt-4 inline-block px-4 py-2 border rounded"
+          >
+            Download Grid
+          </a>
         </div>
       )}
     </main>
